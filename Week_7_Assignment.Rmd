@@ -15,62 +15,80 @@ Take the information that you’ve selected about these three books, and separat
 Write R code, using your packages of choice, to load the information from each of the three sources into separate R data frames. Are the three data frames identical?
 
 
-```{r}
+```{r load-libraries,echo=TRUE, results='hide', message=FALSE}
 # Load libraries 
 library(xml2)
 library(data.table)
 library(jsonlite)
+library(tidyverse)
+library(rvest)
 ```
 
 
+I have created and saved all three files in HTML, xml and json in my github repository.
+Let's load the files and store the info into seperate R data frames to compare the information. 
 
-Let's begin by first storing the information in an HTML table and save it as an HTML file
+```{r}
+html_df <- read_html("https://raw.githubusercontent.com/xhuliaturkaj/Week-7-DATA-607/main/Books.html")
+html_table <- html_table(html_df, header = TRUE, fill = TRUE)[[1]]
 
-```{html}
-#making sure to specify HTML as the language used for this code chunk. 
-
-<html>
-<head>
-    <title>HTML Table Example</title>
-</head>
-<body>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Year of Publication</th>
-                <th>Edition</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Data Science in Context: Foundations, Challenges, Opportunities</td>
-                <td>Alfred Z. Spector <br>Peter Norvig <br> Chris Wiggins <br> Jeannette M. Wing</td> 
-                <td>2022</td>
-                <td>New</td>
-            </tr>
-            <tr>
-                <td>Text Mining with R: A Tidy Approach </td>
-                <td>Julia Silge  <br>David Robinson  </td>
-                <td>2017</td>
-                <td>1st</td>
-            </tr>
-            <tr>
-                <td>SQL for Data Analysis: Advanced Techniques for Transforming Data into Insights </td>
-                <td>Cathy Tanimura </td>
-                <td>2021</td>
-                <td>1st</td>
-            </tr>
-        </tbody>
-    </table>
-</body>
-</html>
-
-
-
+knitr::kable(html_table)
 
 ```
-Next I am storing the information in an xml format
+
+ 
+Next let's check the information from the xml file 
+
+```{r}
+
+xml <- read_xml("https://raw.githubusercontent.com/xhuliaturkaj/Week-7-DATA-607/main/Books.xml")
 
 
+# Extract book elements
+books <- xml %>% xml_find_all("//book")
+
+# Create empty vectors for each column
+titles <- character(0)
+authors <- character(0)
+years <- character(0)
+editions <- character(0)
+
+# Iterate through book elements
+for (book in books) {
+  title <- book %>% xml_find_first(".//Title") %>% xml_text()
+  author_elements <- book %>% xml_find_all(".//AuthorName")
+  author <- paste(xml_text(author_elements), collapse = ", ")
+  year <- book %>% xml_find_first(".//Year") %>% xml_text()
+  edition <- book %>% xml_find_first(".//Edition") %>% xml_text()
+  
+  # Append values to the vectors
+  titles <- c(titles, title)
+  authors <- c(authors, author)
+  years <- c(years, year)
+  editions <- c(editions, edition)
+}
+ # Create the dataframe 
+
+books_xml_df <- data.frame(
+  Title = titles,
+  Author = authors,
+  Year = years,
+  Edition = editions
+)
+knitr::kable(books_xml_df)
+
+```
+Last, let's retrieve the information from the json  format file
+
+
+```{r}
+json_table <- fromJSON("https://raw.githubusercontent.com/xhuliaturkaj/Week-7-DATA-607/main/Books.json", flatten = TRUE) 
+
+# Flatten the "Author" column and join author names with commas
+json_table$Author <- sapply(json_table$Author, paste, collapse = ", ")
+
+
+knitr::kable(json_table)
+
+```
+Upon retrieving the info from all three files we can confirm the information is identical, though the format is not the same. 
