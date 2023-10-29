@@ -1,0 +1,30 @@
+<data>
+    <book>
+        <Title>Data Science in Context: Foundations, Challenges, Opportunities</Title>
+        <Author>
+            <AuthorName>Alfred Z. Spector</AuthorName>
+            <AuthorName>Peter Norvig</AuthorName>
+            <AuthorName>Chris Wiggins</AuthorName>
+            <AuthorName>Jeannette M. Wing</AuthorName>
+        </Author>
+        <Year>2022</Year>
+        <Edition>New</Edition>
+    </book>
+    <book>
+        <Title>Text Mining with R: A Tidy Approach</Title>
+        <Author>
+            <AuthorName>Julia Silge</AuthorName>
+            <AuthorName>David Robinson</AuthorName>
+        </Author>
+        <Year>2017</Year>
+        <Edition>1st</Edition>
+    </book>
+    <book>
+        <Title>SQL for Data Analysis: Advanced Techniques for Transforming Data into Insights</Title>
+        <Author>
+            <AuthorName>Cathy Tanimura</AuthorName>
+        </Author>
+        <Year>2021</Year>
+        <Edition>1st</Edition>
+    </book>
+</data>

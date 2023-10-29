@@ -1,0 +1,30 @@
+[
+    {
+        "Title": "Data Science in Context: Foundations, Challenges, Opportunities",
+        "Author": [
+            "Alfred Z. Spector",
+            "Peter Norvig",
+            "Chris Wiggins",
+            "Jeannette M. Wing"
+        ],
+        "Year of Publication": 2022,
+        "Edition": "New"
+    },
+    {
+        "Title": "Text Mining with R: A Tidy Approach",
+        "Author": [
+            "Julia Silge",
+            "David Robinson"
+        ],
+        "Year of Publication": 2017,
+        "Edition": "1st"
+    },
+    {
+        "Title": "SQL for Data Analysis: Advanced Techniques for Transforming Data into Insights",
+        "Author": [
+            "Cathy Tanimura"
+        ],
+        "Year of Publication": 2021,
+        "Edition": "1st"
+    }
+]
